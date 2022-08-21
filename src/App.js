@@ -1,7 +1,7 @@
 import './App.css';
 import Header from "./components/header"
 // import Footer from "./components/footer"
-import {Movie_List, Movie_Details} from "./components/main"
+import Movie_List from "./components/main"
 
 
 
@@ -12,9 +12,9 @@ function App() {
       <div className="App-header">
         <Header/>
       </div>
-     <div className='App-main'>
+     <div className='App-layout'>
         < Movie_List />
-        < Movie_Details />
+      
      </div>
      <div className="App-footer">
       

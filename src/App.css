@@ -16,9 +16,42 @@
   color: #61dafb;
 }
 .App-main{
-  margin-top: 3em;
-  display: flex;
-  /* grid-template-columns: auto auto; */
-  justify-content: space-around;
-  column-gap:5px;
+  margin-top: 5%;
+  display: grid;
+  grid-template-columns:1fr 1fr;
+  margin: 0px 5%;
+  gap: 3em;
+}
+h3{
+  cursor: pointer;
+  
+}
+h3:hover{
+    color: #61dafb;
+    text-decoration: none;
+  
+}
+.orange{
+  color:orange;
+}
+.primary{
+  color:#61dafb
+}
+/* .primary:hover{
+  color:orange
+} */
+.starsLayout{
+  display:none
+}
+.rate-container{
+margin-top:2em;
+border-top:1px solid white;
+border-width: 3px;
+}
+.rate-star{
+  margin-top: 5px;
+}
+.rate-star .fa-star{
+  font-size:1.5rem;
+  cursor:pointer;
 }
