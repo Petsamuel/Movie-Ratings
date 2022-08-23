@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Form from "./form";
+import API from "../api-services";
 
-function Movie_List() {
-  // hooks 
-  const [movies, setmovies] = useState([]);
+function MovieList() {
+  // react-hooks
+  const [movies, setMovies] = useState([]);
   const [SelectedMovie, setSelectedMovie] = useState([]);
   const [rateHover, setRateHover] = useState(-1);
-  const higlightRate = high => (e) => {
-    setRateHover(high)
-  }
-  // end of react hooks 
+  const [SelectedEditMovie, setSelectedEditMovie] = useState([]);
 
+  // end of react hooks
+
+  let updateRating = SelectedMovie.id;
+
+  const higlightRate = (high) => (e) => {
+    setRateHover(high);
+  };
   const moviesUrls = "http://localhost:8000/movies/";
   const headers = new Headers({
     "Content-Type": "application/json",
-    "Authorization": "Token 3dca8f95a03d20532dd21f44bb4eed734dc137ac",
+    Authorization: "Token 3dca8f95a03d20532dd21f44bb4eed734dc137ac",
   });
   useEffect(() => {
     fetch(moviesUrls, {
@@ -23,45 +29,194 @@ function Movie_List() {
       headers,
     })
       .then((resp) => resp.json())
-      .then((resp) => setmovies(resp))
+      .then((resp) => setMovies(resp))
       .catch((error) => console.log(error));
   }, []);
 
   function showLayout() {
-    var layout = document.querySelector(".starsLayout")
-    layout.style.display = "block"
-
+    const main_section = document.querySelector(".main-section2");
+    const selected_movie = document.querySelector(".selected-movie");
+    const layout = document.querySelector(".starsLayout");
+    layout.style.display = "block";
+    const edit_form = document.querySelector(".edit-form");
+    edit_form.style.display = "none";
+    main_section.style.display = "block";
+    selected_movie.style.display = "block";
+  }
+  function hideLayout() {
+    const main_section = document.querySelector(".main-section2");
+    const layout = document.querySelector(".starsLayout");
+    const selected_movie = document.querySelector(".selected-movie");
+    const edit_form = document.querySelector(".edit-form");
+    layout.style.display = "none";
+    selected_movie.style.display = "none";
+    edit_form.style.display = "block";
+    main_section.style.display = "block";
   }
 
   const MovieClicked = (movie) => (e) => {
-    setSelectedMovie(movie);
-
-    showLayout()
+    updatedRatings(movie);
+    SelectedMoviesList();
+    showLayout();
   };
-const  mov =SelectedMovie.id
-
-  // http://localhost:8000/ratings/
-  const hoverClicked = rate => (e) => {
-    fetch(`http://localhost:8000/movies/${mov}/rate_movie/`, {
+  const updatedRatings = (resp) => {
+    setSelectedMovie([]);
+    setSelectedMovie(resp);
+  };
+  const updatedMovie = (props) => {
+    const newMovies = movies.map((mov) => {
+      if (mov.id === props.id) {
+        return props;
+      }
+      return mov;
+    });
+    setMovies(newMovies);
+  };
+  const hoverClicked = (rate) => (e) => {
+    fetch(`http://localhost:8000/movies/${updateRating}/rate_movie/`, {
       method: "POST",
       headers,
-      body: JSON.stringify({ stars: rate + 1 })
-    }).then((resp) => resp.json())
-      .then((resp) => console.log(resp))
+      body: JSON.stringify({ stars: rate + 1 }),
+    })
+      .then(() => getDetails())
       .catch((error) => console.log(error));
+  };
+  const getDetails = () => {
+    fetch(`http://localhost:8000/movies/${updateRating}`, {
+      method: "GET",
+      headers,
+    })
+      .then((resp) => resp.json())
+      .then((resp) => updatedRatings(resp))
+      .catch((error) => console.log(error));
+  };
+
+  const RatingStar = () => {
+    return (
+      <div className="rate-container">
+        <span className="rate-text">Rate it</span>
+        <div className="rate-star">
+          {[...Array(5)].map((e, index) => {
+            return (
+              <FontAwesomeIcon
+                key={index}
+                icon={faStar}
+                className={rateHover > index - 1 ? "primary" : ""}
+                onMouseEnter={higlightRate(index)}
+                onMouseLeave={higlightRate(-1)}
+                onClick={hoverClicked(index)}
+              />
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+  function StarLayout() {
+    return (
+      <React.Fragment>
+        <FontAwesomeIcon
+          icon={faStar}
+          className={SelectedMovie.Avg_rating > 0 ? "orange" : ""}
+        />
+        <FontAwesomeIcon
+          icon={faStar}
+          className={SelectedMovie.Avg_rating > 1 ? "orange" : ""}
+        />
+        <FontAwesomeIcon
+          icon={faStar}
+          className={SelectedMovie.Avg_rating > 2 ? "orange" : ""}
+        />
+        <FontAwesomeIcon
+          icon={faStar}
+          className={SelectedMovie.Avg_rating > 3 ? "orange" : ""}
+        />
+        <FontAwesomeIcon
+          icon={faStar}
+          className={SelectedMovie.Avg_rating > 4 ? "orange" : ""}
+        />
+        ({SelectedMovie.Stars})
+      </React.Fragment>
+    );
   }
+
+  function SelectedMoviesList() {
+    return (
+      <div>
+        <h3>{SelectedMovie.title}</h3>
+        <p>{SelectedMovie.description}</p>
+        <StarLayout />
+      </div>
+    );
+  }
+
+  const editFile = (movie) => {
+    setSelectedEditMovie(movie);
+    hideLayout();
+  };
+
+  const deleteFile = (movie) => {
+    const newMovie = movies.filter((mov) => {
+      if (mov.id === movie.id) {
+        return movie.id
+      }
+      return true;
+    });
+    API.deleteMovie(movie.id)
+      .then(() => {
+        setMovies(newMovie);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setMovies(newMovie);
+
+  };
+
+  const AddMovie = () => {
+    setSelectedEditMovie({ title: "", description: "" });
+    setSelectedMovie([]);
+    hideLayout();
+  };
+  const newMovie = (movie) => {
+    const newMov = [...movies, movie];
+    setMovies(newMov);
+  };
 
   return (
     <div className="App-main">
       <div className="App-movie-list">
-        <h1>Movie_List</h1>
+        <div className="movie-list">
+          <h3>Movie_List</h3>
+          <span>
+            {" "}
+            <input type="button" value="Add Movie" onClick={AddMovie} />
+          </span>
+        </div>
         <div>
-          {movies.map(movie => {
+          {movies.map((movie) => {
             return (
               <div key={movie.id}>
-                <h3 onClick={MovieClicked(movie)}>
-                  {movie.title}
-                </h3>
+                <div className="movie-flex">
+                  <span onClick={MovieClicked(movie)} className="pointers">
+                    {movie.title}
+                  </span>
+                  <span className="edit-container">
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      onClick={() => {
+                        editFile(movie);
+                      }}
+                    />
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      onClick={() => {
+                        deleteFile(movie);
+                      }}
+                    />
+                  </span>
+                  <div></div>
+                </div>
               </div>
             );
           })}
@@ -69,35 +224,21 @@ const  mov =SelectedMovie.id
       </div>
       <div className="section2">
         <div className="App-movie-details">
-          <h1>Movie_Details</h1>
-
-          <div>
-            <h3>{SelectedMovie.title}</h3>
-            <p>{SelectedMovie.description}</p>
+          <h3>Movie_Details</h3>
+          <div className="main-section2">
+            <div className="selected-movie">
+              <SelectedMoviesList />
+            </div>
             <div className="starsLayout">
-              <FontAwesomeIcon icon={faStar} className={SelectedMovie.Avg_rating > 0 ? "orange" : ""} />
-              <FontAwesomeIcon icon={faStar} className={SelectedMovie.Avg_rating > 1 ? "orange" : ""} />
-              <FontAwesomeIcon icon={faStar} className={SelectedMovie.Avg_rating > 2 ? "orange" : ""} />
-              <FontAwesomeIcon icon={faStar} className={SelectedMovie.Avg_rating > 3 ? "orange" : ""} />
-              <FontAwesomeIcon icon={faStar} className={SelectedMovie.Avg_rating > 4 ? "orange" : ""} />
-              ({SelectedMovie.Stars})
-              <div className="rate-container">
-                <span>Rate</span>
-                < div className="rate-star">
-                  {
-                    [...Array(5)].map((e, index) => {
-                      return (
-                        <FontAwesomeIcon key={index} icon={faStar} className={rateHover > index - 1 ? "primary" : ""}
-                          onMouseEnter={higlightRate(index)}
-                          onMouseLeave={higlightRate(-1)}
-                          onClick={hoverClicked(index)}
-                        />
-                      )
-                    })
+              <RatingStar />
+            </div>
 
-                  }
-                </div>
-              </div>
+            <div className="edit-form">
+              <Form
+                movie={SelectedEditMovie}
+                updatedMovie={updatedMovie}
+                newMovie={newMovie}
+              />
             </div>
           </div>
         </div>
@@ -106,4 +247,4 @@ const  mov =SelectedMovie.id
   );
 }
 
-export default Movie_List;
+export default MovieList;

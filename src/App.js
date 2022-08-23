@@ -1,7 +1,7 @@
 import './App.css';
 import Header from "./components/header"
 // import Footer from "./components/footer"
-import Movie_List from "./components/main"
+import MovieList from "./components/main"
 
 
 
@@ -13,7 +13,8 @@ function App() {
         <Header/>
       </div>
      <div className='App-layout'>
-        < Movie_List />
+        < MovieList />
+        
       
      </div>
      <div className="App-footer">

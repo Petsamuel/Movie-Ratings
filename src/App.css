@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  
 }
 
 .App-link {
@@ -22,14 +21,26 @@
   margin: 0px 5%;
   gap: 3em;
 }
-h3{
+.pointers{
   cursor: pointer;
+  font-weight: 600;
+  margin:12px;
   
 }
-h3:hover{
+.movie-list{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pointers:hover{
     color: #61dafb;
     text-decoration: none;
-  
+}
+.movie-flex{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  justify-content: end;
 }
 .orange{
   color:orange;
@@ -37,21 +48,48 @@ h3:hover{
 .primary{
   color:#61dafb
 }
-/* .primary:hover{
-  color:orange
-} */
-.starsLayout{
-  display:none
+
+.main-section2{
+  display:none;
 }
 .rate-container{
 margin-top:2em;
 border-top:1px solid white;
 border-width: 3px;
 }
-.rate-star{
-  margin-top: 5px;
+.rate-star, .rate-text{
+  margin-top: 8px;
 }
 .rate-star .fa-star{
   font-size:1.5rem;
   cursor:pointer;
+}
+#title{
+  width:40%;
+  height:25px;
+  outline-color: #61dafb;
+  
+}
+#descriptions{
+  width:40%;
+  height:50px;
+  outline-color: #61dafb;
+  
+}
+
+.edit-container svg{
+  padding:0px 9px;
+  cursor:pointer;
+}
+.fa-pen-to-square{
+  color:orange;
+}
+.fa-trash{
+  color:rgb(170, 20, 20);
+}
+.fa-pen-to-square:hover, .fa-pen-to-square:active{
+  color:#61dafb;
+}
+.fa-trash:hover , .fa-trash:active{
+  color:#61dafb
 }
