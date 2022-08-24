@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useCookies } from "react-cookie";
+
 import Form from "./form";
 import API from "../api-services";
 
@@ -10,8 +12,10 @@ function MovieList() {
   const [SelectedMovie, setSelectedMovie] = useState([]);
   const [rateHover, setRateHover] = useState(-1);
   const [SelectedEditMovie, setSelectedEditMovie] = useState([]);
+  const [token] = useCookies(["ps-cookies"]);
 
-  // end of react hooks
+  // end of react 
+  
 
   let updateRating = SelectedMovie.id;
 
@@ -19,19 +23,25 @@ function MovieList() {
     setRateHover(high);
   };
   const moviesUrls = "http://localhost:8000/movies/";
-  const headers = new Headers({
-    "Content-Type": "application/json",
-    Authorization: "Token 3dca8f95a03d20532dd21f44bb4eed734dc137ac",
-  });
+
   useEffect(() => {
     fetch(moviesUrls, {
       Method: "GET",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token['ps-cookies']}`,
+      },
     })
       .then((resp) => resp.json())
       .then((resp) => setMovies(resp))
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    if (!token['ps-cookies'])window.location.href="/"
+  }, [token]);
+
+  
 
   function showLayout() {
     const main_section = document.querySelector(".main-section2");
@@ -75,7 +85,10 @@ function MovieList() {
   const hoverClicked = (rate) => (e) => {
     fetch(`http://localhost:8000/movies/${updateRating}/rate_movie/`, {
       method: "POST",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token['ps-cookies']}`
+      },
       body: JSON.stringify({ stars: rate + 1 }),
     })
       .then(() => getDetails())
@@ -84,7 +97,10 @@ function MovieList() {
   const getDetails = () => {
     fetch(`http://localhost:8000/movies/${updateRating}`, {
       method: "GET",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token['ps-cookies']}`,
+      },
     })
       .then((resp) => resp.json())
       .then((resp) => updatedRatings(resp))
@@ -158,11 +174,11 @@ function MovieList() {
   const deleteFile = (movie) => {
     const newMovie = movies.filter((mov) => {
       if (mov.id === movie.id) {
-        return movie.id
+        return (movie.id, false);
       }
       return true;
     });
-    API.deleteMovie(movie.id)
+    API.deleteMovie(movie.id, token['ps-cookies'])
       .then(() => {
         setMovies(newMovie);
       })
@@ -170,7 +186,6 @@ function MovieList() {
         console.log(error);
       });
     setMovies(newMovie);
-
   };
 
   const AddMovie = () => {
@@ -193,10 +208,10 @@ function MovieList() {
             <input type="button" value="Add Movie" onClick={AddMovie} />
           </span>
         </div>
-        <div>
+        <div className="wrapper">
           {movies.map((movie) => {
             return (
-              <div key={movie.id}>
+              <div className="move-scroll" key={movie.id}>
                 <div className="movie-flex">
                   <span onClick={MovieClicked(movie)} className="pointers">
                     {movie.title}
@@ -215,7 +230,7 @@ function MovieList() {
                       }}
                     />
                   </span>
-                  <div></div>
+                
                 </div>
               </div>
             );

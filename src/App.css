@@ -1,8 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Montserrat&family=Sofia&display=swap");
+
 .App ,body{
   background-color: #282c34;
   color: white;
+  scroll-behavior: smooth;
+  margin: 0 auto;
+  font-family: Poppins, ;
 }
 
+.App-layout{
+  min-height:100vh;
+
+}
 .App-header {
   display: flex;
   flex-direction: column;
@@ -15,7 +24,7 @@
   color: #61dafb;
 }
 .App-main{
-  margin-top: 5%;
+  margin: 5%;
   display: grid;
   grid-template-columns:1fr 1fr;
   margin: 0px 5%;
@@ -31,6 +40,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 .pointers:hover{
     color: #61dafb;
@@ -41,6 +51,24 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   justify-content: end;
+  border-left: 1px solid orange;
+  
+  margin: 5px 0px;
+}
+.movie-flex:hover{
+  border-left: 1px solid rgb(170, 20, 20);
+  border-bottom: 1px solid #61dafb;
+}
+.wrapper{
+  height:200px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overflow-y: scroll;
+  /* border-bottom: 1px solid #61dafb; */
+}
+::-webkit-scrollbar{
+  width:0;
+  background: transparent;
 }
 .orange{
   color:orange;
@@ -68,12 +96,16 @@ border-width: 3px;
   width:40%;
   height:25px;
   outline-color: #61dafb;
+  border-radius:5px;
+  padding:1.1em; 
   
 }
 #descriptions{
   width:40%;
   height:50px;
   outline-color: #61dafb;
+  border-radius:5px;
+  padding:1.1em; 
   
 }
 
@@ -92,4 +124,63 @@ border-width: 3px;
 }
 .fa-trash:hover , .fa-trash:active{
   color:#61dafb
+}
+
+/* auth login form  */
+.auth-form{
+  margin-top:5em;
+  display:flex;
+  place-items:center;
+  flex-direction:column;
+}
+#username{
+  width:25em;
+  height:25px;
+  outline-color: #61dafb;
+  border-radius:5px;
+  padding:1.1em;
+  
+}
+#password{
+  width:25em;
+  height:25px;
+  outline-color: #61dafb;
+  border-radius:5px;
+  padding:1.1em;  
+}
+
+input[type="button"]{
+  padding:0.5em;
+
+}
+input[type="submit"]{
+  padding:0.8em;
+  width:100px;
+  border-radius:5px;
+  border: none;
+  font-weight:bolder;
+  background-color: #61dafb;
+  cursor: pointer;
+
+}
+input[type="submit"]:hover{
+  background-color:orange;
+}
+.footer{
+  bottom: 0px;
+  text-align: center;
+  color: darkcyan;
+}
+@media  screen and (max-width:750px) {
+  .App-main{
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns:1fr;
+    margin: 0px 5%;
+    gap: 1em;
+  }
+  .wrapper{
+    overflow-y: scroll;
+    height:70%;
+  }
 }

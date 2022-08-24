@@ -1,30 +1,65 @@
-const headers = new Headers({
-    "Content-Type": "application/json",
-    Authorization: "Token 3dca8f95a03d20532dd21f44bb4eed734dc137ac",
-  });
+
 
 export default class API{
-    static updateMovie(props, body){
+    static updateMovie(props, body, token){
     return fetch(`http://localhost:8000/movies/${props}/`, {
       method: "PUT",
-      headers,
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
       body: JSON.stringify(body),
     })
     .then(resp => resp.json())
 }
 
-static createMovie(body){
+static createMovie(body, token){
     return fetch(`http://localhost:8000/movies/`, {
       method: "POST",
-      headers,
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
       body: JSON.stringify(body),
     })
     .then(resp => resp.json())
 }
-static deleteMovie(props){
+static deleteMovie(props, token){
     return fetch(`http://localhost:8000/movies/${props}/`, {
       method: "DELETE",
-      headers,
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
     })
 }
+static async login(body){
+    const resp = await fetch(`http://localhost:8000/auth/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+  return await resp.json()
+}
+
+static register(body){
+  return fetch(`http://localhost:8000/users/`, {
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json",
+      // Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify(body),
+  })
+  .then(resp => resp.json())
+  .catch(error=> console.log(error))
+}
+
+
+
+
+
+
 }
