@@ -19,7 +19,7 @@ function Auth() {
      
   };
   const register = () => {
-    if ({username}<=0){
+    if ({username}.length<=3){
       errorAlert()
       setMessage(true)
     }
