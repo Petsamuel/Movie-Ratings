@@ -8,8 +8,7 @@ function Auth() {
   const [isLoggedIn, setisLoggedIn] = useState(true);
   const [errMessage, setMessage] = useState(false);
   const [token, setToken] = useCookies(["ps-cookies"]);
-  const userfield= document.querySelector(".username")
-  const Passfield= document.querySelector(".pass")
+ 
 
   
   const Login = () => {
@@ -19,21 +18,24 @@ function Auth() {
      
   };
   const register = () => {
-    // if ({username}.length>0){
+    if ({username, password}.length !== 0){
       API.register({ username, password })
       .then(() => Login())
-      .catch(() => setMessage(false));
+      .catch((error) => setMessage(error));
      
-    // }
-    // errorAlert()
-    // setMessage(true)
+    }
+    else{
+    errorAlert()
+    setMessage(true)
+    }
+ 
 
   };
 
   useEffect(() => {
     if (token["ps-cookies"] === "undefined") {
       setMessage(true)
-      // errorAlert()
+      errorAlert()
     }
     else if (token["ps-cookies"] !== "" && token["ps-cookies"]) 
      window.location.href = "/movies" 
@@ -41,21 +43,21 @@ function Auth() {
 
   }, [token]);
 
-  // function errorAlert(){
-  //   userfield.style.border="1px solid red"
-  //   Passfield.style.border="1px solid red"
-  // }
+  function errorAlert(){
+   document.querySelector("#username").style.border="1px solid red"
+   document.querySelector("#password").style.border="1px solid red"
+    
+  }
 
 
   return (
     <React.Fragment>
       <div className="auth-form">
-
         {isLoggedIn ? <h1>Login</h1> : <h1>Register</h1>}
-        {errMessage ? <small className={errMessage}>invalid username or Password</small> : ""}
+        {errMessage ? <small disabled={errMessage}>invalid username or Password</small> : ""}
         <input
           id="username"
-          className="username"
+          className="pass"
           placeholder="USERNAME"
           type="text"
           onChange={(e) =>{
@@ -66,8 +68,9 @@ function Auth() {
         <br />
        
         <input
-          className="pass"
+        
           placeholder="PASSWORD"
+          className="pass"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
           type="password"
