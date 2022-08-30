@@ -6,12 +6,6 @@ import {faSignOutAlt, faPhotoFilm} from "@fortawesome/free-solid-svg-icons"
 
 function Header(props) {
   const [token, setToken, DeleteToken] = useCookies(["ps-cookies"]);
-  const [username, setUsername] = useState([]);
-
-  function Dusername(props){
-    setUsername(props.username)
-    return Dusername
-  }
   const LogoutUser =()=>{
     DeleteToken(["ps-cookies"])
   }
@@ -30,7 +24,7 @@ function Header(props) {
     </div>
     <div className='Logout' onClick={LogoutUser}>
     <FontAwesomeIcon icon={faSignOutAlt} />
-     &nbsp; Logout {username}
+     &nbsp; Logout 
     </div>
 
    </header>

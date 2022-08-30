@@ -44,8 +44,8 @@ function Auth() {
   }, [token]);
 
   function errorAlert(){
-   document.querySelector("#username").style.border="1px solid red"
-   document.querySelector("#password").style.border="1px solid red"
+   document.querySelector("#username").style.border="1px solid red";
+   document.querySelector("#password").style.border="1px solid red";
     
   }
 
