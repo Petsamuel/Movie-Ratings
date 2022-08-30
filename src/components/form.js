@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import API from '../api-services'
 import {useCookies} from "react-cookie"
 
-
-
 function Form(props) {
     const [FormTitle, setFormtitle] = useState()
     const [FormDescription, setFormdescriptions] = useState()
     const [token] = useCookies(["ps-cookies"]);
-
+    
+    
     useEffect(()=>{
         setFormtitle(props.movie.title)
         setFormdescriptions(props.movie.description)
@@ -27,26 +26,28 @@ function Form(props) {
         .catch(error => console.log(error));
        
      }
+
+    const isDisabled = FormDescription==="" || FormTitle === "";
     
  
     return (
         <React.Fragment>
+            
             <div className="form-heading">
-               
                 <h3>{props.movie.title}</h3>
                 <label htmlFor="title">Title:</label> <br />
                 <input value={FormTitle || ""} id="title" placeholder='title' type="text" 
-                    onChange={e => setFormtitle(e.target.value)}
-                required/> 
+                name="title"    onChange={e => setFormtitle(e.target.value)}
+                /> 
                 <br />
                 <label htmlFor="title">Descriptions:</label> <br />
                 <textarea className="" placeholder="descriptions" id="descriptions" value={FormDescription} 
-                    onChange={e => setFormdescriptions(e.target.value)}
-                required></textarea> <br />
+                name="descriptions"    onChange={e => setFormdescriptions(e.target.value)}
+                ></textarea> <br />
                 {
                 props.movie.id ?
-                 <input onClick={updateMovie} type="submit" value="update"/>:
-                 <input onClick={createMovie} type="submit" value="Add new"/>
+                 <input onClick={updateMovie} type="submit" value="update" disabled={isDisabled}/>:
+                 <input onClick={createMovie} type="submit" value="Add new" disabled={isDisabled}/>
             }
                
                

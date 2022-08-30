@@ -14,6 +14,8 @@ function MovieList() {
   const [SelectedEditMovie, setSelectedEditMovie] = useState([]);
   const [token] = useCookies(["ps-cookies"]);
 
+
+
   // end of react 
   
 
@@ -22,7 +24,7 @@ function MovieList() {
   const higlightRate = (high) => (e) => {
     setRateHover(high);
   };
-  const moviesUrls = "https://bieefilled.pythonanywhere.com/movies/";
+  const moviesUrls = "http://localhost:8000/movies/";
 
   useEffect(() => {
     fetch(moviesUrls, {
@@ -38,11 +40,10 @@ function MovieList() {
   }, []);
 
   useEffect(() => {
-    if (!token['ps-cookies'])window.location.href="/"
+    if (!token['ps-cookies']) window.location.href="/"
   }, [token]);
 
-  
-
+ 
   function showLayout() {
     const main_section = document.querySelector(".main-section2");
     const selected_movie = document.querySelector(".selected-movie");
@@ -83,7 +84,7 @@ function MovieList() {
     setMovies(newMovies);
   };
   const hoverClicked = (rate) => (e) => {
-    fetch(`https://bieefilled.pythonanywhere.com/movies/${updateRating}/rate_movie/`, {
+    fetch(`http://localhost:8000/movies/${updateRating}/rate_movie/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +96,7 @@ function MovieList() {
       .catch((error) => console.log(error));
   };
   const getDetails = () => {
-    fetch(`https://bieefilled.pythonanywhere.com/movies/${updateRating}`, {
+    fetch(`http://localhost:8000/movies/${updateRating}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

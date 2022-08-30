@@ -6,38 +6,58 @@ function Auth() {
   const [username, setUsername] = useState([]);
   const [password, setPassword] = useState([]);
   const [isLoggedIn, setisLoggedIn] = useState(true);
+  const [errMessage, setMessage] = useState(false);
+
+
 
   const [token, setToken] = useCookies(["ps-cookies"]);
+  
 
   const Login = () => {
     API.login({ username, password })
       .then((resp) => setToken("ps-cookies", resp.token))
-      .catch((error) => console.log(error));
+      .catch((error) => setMessage(true));
   };
   const register = () => {
     API.register({ username, password })
-    .then((resp) => console.log(resp))
-    .catch((error) => console.log(error));
-};
-   
+      .then((resp) => console.log(resp))
+      .catch((error) => setMessage(true));
+  };
+
   useEffect(() => {
-    console.log(token);
-    if (token["ps-cookies"]) window.location.href = "/movies";
+    if (token["ps-cookies"] === "undefined") {
+      setMessage(true)
+
+    }
+    else if (token["ps-cookies"] !== "" && token["ps-cookies"]) 
+     window.location.href = "/movies" 
+
+
   }, [token]);
+
+  const Display =()=>{
+    console.log(username)
+    return username;
+  }
+  Display()
 
   return (
     <React.Fragment>
       <div className="auth-form">
+
         {isLoggedIn ? <h1>Login</h1> : <h1>Register</h1>}
-        {/* <label htmlFor="username">username:</label> <br /> */}
+        {errMessage ? <small className={errMessage}>invalid username or Password</small> : ""}
         <input
           id="username"
           placeholder="USERNAME"
           type="text"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) =>{
+            setUsername(e.target.value)
+            setMessage(false)
+          } }
         />
         <br />
-        {/* <label htmlFor="Password">password:</label> <br /> */}
+       
         <input
           className=""
           placeholder="PASSWORD"
@@ -47,7 +67,7 @@ function Auth() {
         />{" "}
         <br />
         {isLoggedIn ? (
-          <input onClick={Login} type="submit" value="LOGIN" />
+          <input onClick={Login} type="submit" value="LOGIN" minLength={"5"}/>
         ) : (
           <input onClick={register} type="submit" value="REGISTER" />
         )}

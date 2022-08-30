@@ -5,7 +5,7 @@
   color: white;
   scroll-behavior: smooth;
   margin: 0 auto;
-  font-family: Poppins, ;
+  font-family: "Poppins" ;
 }
 
 .App-layout{
@@ -14,10 +14,16 @@
 }
 .App-header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-size: calc(10px + 2vmin);
+  gap: 6em;
+  
+}
+.brand{
+  font-size: 1.5em;
+  font-weight: bolder;
 }
 
 .App-link {
@@ -42,7 +48,7 @@
   align-items: center;
   
 }
-.pointers:hover{
+.pointers:hover , .Logout:hover{
     color: #61dafb;
     text-decoration: none;
 }
@@ -55,6 +61,7 @@
   
   margin: 5px 0px;
 }
+
 .movie-flex:hover{
   border-left: 1px solid rgb(170, 20, 20);
   border-bottom: 1px solid #61dafb;
@@ -107,6 +114,11 @@ border-width: 3px;
   border-radius:5px;
   padding:1.1em; 
   
+}
+.errMessage{
+  color: orange;
+  padding-bottom: 5px;
+
 }
 
 .edit-container svg{
@@ -166,6 +178,12 @@ input[type="submit"]{
 input[type="submit"]:hover{
   background-color:orange;
 }
+input[type="submit"]:disabled{
+  color:white;
+  background-color: gray;
+  cursor:not-allowed;
+  
+  }
 .footer{
   bottom: 0px;
   text-align: center;
