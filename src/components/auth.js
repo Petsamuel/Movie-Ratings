@@ -8,7 +8,7 @@ function Auth() {
   const [isLoggedIn, setisLoggedIn] = useState(true);
   const [errMessage, setMessage] = useState(false);
   const [token, setToken] = useCookies(["ps-cookies"]);
-  )
+  
 
   
   const Login = () => {
