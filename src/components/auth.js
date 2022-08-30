@@ -8,8 +8,8 @@ function Auth() {
   const [isLoggedIn, setisLoggedIn] = useState(true);
   const [errMessage, setMessage] = useState(false);
   const [token, setToken] = useCookies(["ps-cookies"]);
-  const userfield= document.querySelector(".username")
-  const Passfield= document.querySelector(".pass")
+  // const userfield= document.querySelector(".username")
+  // const Passfield= document.querySelector(".pass")
 
   
   const Login = () => {
@@ -28,7 +28,7 @@ function Auth() {
     // errorAlert()
     // setMessage(true)
 
-  };
+ };
 
   useEffect(() => {
     if (token["ps-cookies"] === "undefined") {
