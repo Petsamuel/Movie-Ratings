@@ -1,6 +1,6 @@
 export default class API{
     static updateMovie(props, body, token){
-    return fetch(`http://bieefilled.pythonanywhere.com/movies/${props}/`, {
+    return fetch(`https://bieefilled.pythonanywhere.com/movies/${props}/`, {
       method: "PUT",
       headers:{
         "Content-Type": "application/json",
@@ -12,7 +12,7 @@ export default class API{
 }
 
 static createMovie(body, token){
-    return fetch(`http://bieefilled.pythonanywhere.com/movies/`, {
+    return fetch(`https://bieefilled.pythonanywhere.com/movies/`, {
       method: "POST",
       headers:{
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ static createMovie(body, token){
     .then(resp => resp.json())
 }
 static deleteMovie(props, token){
-    return fetch(`http://bieefilled.pythonanywhere.com/movies/${props}/`, {
+    return fetch(`https://bieefilled.pythonanywhere.com/movies/${props}/`, {
       method: "DELETE",
       headers:{
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ static deleteMovie(props, token){
     })
 }
 static async login(body){
-    const resp = await fetch(`http://bieefilled.pythonanywhere.com/auth/`, {
+    const resp = await fetch(`https://bieefilled.pythonanywhere.com/auth/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +43,7 @@ static async login(body){
 }
 
 static register(body){
-  return fetch(`http://bieefilled.pythonanywhere.com/users/`, {
+  return fetch(`https://bieefilled.pythonanywhere.com/users/`, {
     method: "POST",
     headers:{
       "Content-Type": "application/json",
