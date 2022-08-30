@@ -19,20 +19,21 @@ function Auth() {
      
   };
   const register = () => {
-    if ({username}.length<=3){
-      errorAlert()
-      setMessage(true)
-    }
-    API.register({ username, password })
-    .then(() => Login())
-    .catch(() => setMessage(false));
+    // if ({username}.length>0){
+      API.register({ username, password })
+      .then(() => Login())
+      .catch(() => setMessage(false));
+     
+    // }
+    // errorAlert()
+    // setMessage(true)
 
   };
 
   useEffect(() => {
     if (token["ps-cookies"] === "undefined") {
       setMessage(true)
-      errorAlert()
+      // errorAlert()
     }
     else if (token["ps-cookies"] !== "" && token["ps-cookies"]) 
      window.location.href = "/movies" 
@@ -40,10 +41,10 @@ function Auth() {
 
   }, [token]);
 
-  function errorAlert(){
-    userfield.style.border="1px solid red"
-    Passfield.style.border="1px solid red"
-  }
+  // function errorAlert(){
+  //   userfield.style.border="1px solid red"
+  //   Passfield.style.border="1px solid red"
+  // }
 
 
   return (
