@@ -11,7 +11,7 @@ function Router() {
     <BrowserRouter>
       <cookieProvider>
         <Routes>
-          <Route exact path="/" element={<Auth />} />
+          <Route exact path="*" element={<Auth />} />
           <Route exact path="/movies" element={<App />} />
         </Routes>
       </cookieProvider>

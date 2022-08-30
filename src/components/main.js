@@ -14,9 +14,7 @@ function MovieList() {
   const [SelectedEditMovie, setSelectedEditMovie] = useState([]);
   const [token] = useCookies(["ps-cookies"]);
 
-
-
-  // end of react 
+  // end of react hooks
   
 
   let updateRating = SelectedMovie.id;
@@ -40,7 +38,7 @@ function MovieList() {
   }, []);
 
   useEffect(() => {
-    if (!token['ps-cookies']) window.location.href="/"
+    if (!token['ps-cookies'] || token["ps-cookies"]==="undefined") window.location.href="/"
   }, [token]);
 
  

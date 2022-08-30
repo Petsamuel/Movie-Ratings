@@ -7,27 +7,32 @@ function Auth() {
   const [password, setPassword] = useState([]);
   const [isLoggedIn, setisLoggedIn] = useState(true);
   const [errMessage, setMessage] = useState(false);
-
-
-
   const [token, setToken] = useCookies(["ps-cookies"]);
-  
+  const userfield= document.querySelector(".username")
+  const Passfield= document.querySelector(".pass")
 
+  
   const Login = () => {
     API.login({ username, password })
       .then((resp) => setToken("ps-cookies", resp.token))
-      .catch((error) => setMessage(true));
+      .catch(() => setMessage(true))
+     
   };
   const register = () => {
+    if ({username}<=0){
+      errorAlert()
+      setMessage(true)
+    }
     API.register({ username, password })
-      .then((resp) => console.log(resp))
-      .catch((error) => setMessage(true));
+    .then(() => Login())
+    .catch(() => setMessage(false));
+
   };
 
   useEffect(() => {
     if (token["ps-cookies"] === "undefined") {
       setMessage(true)
-
+      errorAlert()
     }
     else if (token["ps-cookies"] !== "" && token["ps-cookies"]) 
      window.location.href = "/movies" 
@@ -35,11 +40,11 @@ function Auth() {
 
   }, [token]);
 
-  const Display =()=>{
-    console.log(username)
-    return username;
+  function errorAlert(){
+    userfield.style.border="1px solid red"
+    Passfield.style.border="1px solid red"
   }
-  Display()
+
 
   return (
     <React.Fragment>
@@ -49,6 +54,7 @@ function Auth() {
         {errMessage ? <small className={errMessage}>invalid username or Password</small> : ""}
         <input
           id="username"
+          className="username"
           placeholder="USERNAME"
           type="text"
           onChange={(e) =>{
@@ -59,7 +65,7 @@ function Auth() {
         <br />
        
         <input
-          className=""
+          className="pass"
           placeholder="PASSWORD"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
@@ -73,11 +79,11 @@ function Auth() {
         )}
         {isLoggedIn ? (
           <p onClick={() => setisLoggedIn(false)}>
-            you don't have an account ? REGISTER HERE{" "}
+            you don't have an account ? REGISTER HERE
           </p>
         ) : (
           <p onClick={() => setisLoggedIn(true)}>
-            already have an account ? LOGIN HERE{" "}
+            already have an account ? LOGIN HERE
           </p>
         )}
         <br />

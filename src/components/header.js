@@ -1,25 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import {useCookies} from "react-cookie"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faSignOutAlt} from "@fortawesome/free-solid-svg-icons"
+import {faSignOutAlt, faPhotoFilm} from "@fortawesome/free-solid-svg-icons"
 
-function Header() {
+function Header(props) {
   const [token, setToken, DeleteToken] = useCookies(["ps-cookies"]);
   const [username, setUsername] = useState([]);
 
+  function Dusername(props){
+    setUsername(props.username)
+    return Dusername
+  }
   const LogoutUser =()=>{
-    
     DeleteToken(["ps-cookies"])
-
   }
 
   return (
    <React.Fragment>
-    <div className="brand"> &#10100; SP &#10101; </div>
+   <header>
+   <div className="brand"> &#10100; SP &#10101; </div>
      <div className="App-header">
     <div className="add-movie ">
     <h2>
+    <FontAwesomeIcon icon={faPhotoFilm} />
       <span>Movie-Ratings</span>
     </h2>
     </div>
@@ -29,6 +33,7 @@ function Header() {
      &nbsp; Logout {username}
     </div>
 
+   </header>
    </React.Fragment>
   )
 }

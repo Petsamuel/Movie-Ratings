@@ -1,5 +1,3 @@
-
-
 export default class API{
     static updateMovie(props, body, token){
     return fetch(`http://localhost:8000/movies/${props}/`, {

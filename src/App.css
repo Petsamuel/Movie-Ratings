@@ -12,14 +12,18 @@
   min-height:100vh;
 
 }
-.App-header {
+header{
+  margin-bottom:1em;
+  box-shadow:1px 5px 10px gray;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
   gap: 6em;
-  
+}
+.fa-photo-film{
+  color:#61dafb
 }
 .brand{
   font-size: 1.5em;
@@ -121,6 +125,7 @@ border-width: 3px;
 
 }
 
+
 .edit-container svg{
   padding:0px 9px;
   cursor:pointer;
@@ -200,5 +205,8 @@ input[type="submit"]:disabled{
   .wrapper{
     overflow-y: scroll;
     height:70%;
+  }
+  header{
+    font-size: calc(5px + 2vmin);
   }
 }
