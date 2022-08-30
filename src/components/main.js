@@ -22,7 +22,7 @@ function MovieList() {
   const higlightRate = (high) => (e) => {
     setRateHover(high);
   };
-  const moviesUrls = "http://localhost:8000/movies/";
+  const moviesUrls = "http://bieefilled.pythonanywhere.com/movies/";
 
   useEffect(() => {
     fetch(moviesUrls, {
@@ -82,7 +82,7 @@ function MovieList() {
     setMovies(newMovies);
   };
   const hoverClicked = (rate) => (e) => {
-    fetch(`http://localhost:8000/movies/${updateRating}/rate_movie/`, {
+    fetch(`http://bieefilled.pythonanywhere.com/movies/${updateRating}/rate_movie/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ function MovieList() {
       .catch((error) => console.log(error));
   };
   const getDetails = () => {
-    fetch(`http://localhost:8000/movies/${updateRating}`, {
+    fetch(`http://bieefilled.pythonanywhere.com/movies/${updateRating}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
