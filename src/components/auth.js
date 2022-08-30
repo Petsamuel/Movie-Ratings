@@ -8,8 +8,7 @@ function Auth() {
   const [isLoggedIn, setisLoggedIn] = useState(true);
   const [errMessage, setMessage] = useState(false);
   const [token, setToken] = useCookies(["ps-cookies"]);
-  const userfield= document.querySelector(".username")
-  const Passfield= document.querySelector(".pass")
+  )
 
   
   const Login = () => {
@@ -41,8 +40,10 @@ function Auth() {
   }, [token]);
 
   function errorAlert(){
-    userfield.style.border="1px solid red"
-    Passfield.style.border="1px solid red"
+    const userfield= document.querySelector(".username")
+    const Passfield= document.querySelector(".pass")
+    userfield.style.border="1px solid red";
+    Passfield.style.border="1px solid red";
   }
 
 
