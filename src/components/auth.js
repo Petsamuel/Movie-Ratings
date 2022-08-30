@@ -73,7 +73,7 @@ function Auth() {
         />{" "}
         <br />
         {isLoggedIn ? (
-          <input onClick={Login} type="submit" value="LOGIN" minLength={"5"}/>
+          <input onClick={Login} type="submit" value="LOGIN"/>
         ) : (
           <input onClick={register} type="submit" value="REGISTER" />
         )}
