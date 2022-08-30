@@ -209,4 +209,8 @@ input[type="submit"]:disabled{
   header{
     font-size: calc(5px + 1.5vmin);
   }
+  .brand{
+  font-size: 1em;
+  font-weight: bold;
+}
 }
