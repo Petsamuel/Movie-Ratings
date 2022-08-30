@@ -31,7 +31,7 @@ function Auth() {
   useEffect(() => {
     if (token["ps-cookies"] === "undefined") {
       setMessage(true)
-      errorAlert()
+//       errorAlert()
     }
     else if (token["ps-cookies"] !== "" && token["ps-cookies"]) 
      window.location.href = "/movies" 
@@ -39,12 +39,12 @@ function Auth() {
 
   }, [token]);
 
-  function errorAlert(){
-    const userfield= document.querySelector(".username")
-    const Passfield= document.querySelector(".pass")
-    userfield.style.border="1px solid red";
-    Passfield.style.border="1px solid red";
-  }
+//   function errorAlert(){
+//     const userfield= document.querySelector(".username")
+//     const Passfield= document.querySelector(".pass")
+//     userfield.style.border="1px solid red";
+//     Passfield.style.border="1px solid red";
+//   }
 
 
   return (
